@@ -2,25 +2,37 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import BookingRow from "./BookingRow";
 import Swal from 'sweetalert2';
-import axios from "axios";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 const Bookings = () => {
 
     const { user } = useContext(AuthContext);
     const [bookings, setBookings] = useState([]);
-    const url = `http://localhost:5000/bookings?email=${user?.email}`
+
+    const axiosSecure = useAxiosSecure();
+    const url = `/bookings?email=${user?.email}`
+    // const url = `https://car-doctor-server-ruddy-kappa.vercel.app/bookings?email=${user?.email}`
 
     useEffect(() => {
 
-        axios.get(url, { withCredentials: true })
-            .then(res => {
-                setBookings(res.data);
-            })
+
+
+        axiosSecure.get(url)
+        .then(res=>{
+            setBookings(res.data)
+        })
+
+
+
+        // axios.get(url, { withCredentials: true })
+        //     .then(res => {
+        //         setBookings(res.data);
+        //     })
 
 
         // fetch(url)
         //     .then(res => res.json())
         //     .then(data => setBookings(data));
-    }, [url])
+    }, [axiosSecure, url])
 
 
     const handleDelete = (id) => {
@@ -34,7 +46,7 @@ const Bookings = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/bookings/${id}`, {
+                fetch(`https://car-doctor-server-ruddy-kappa.vercel.app/bookings/${id}`, {
                     method: "DELETE"
                 })
                     .then(res => res.json())
@@ -56,7 +68,7 @@ const Bookings = () => {
 
 
     const handleConfirm = id => {
-        fetch(`http://localhost:5000/bookings/${id}`, {
+        fetch(`https://car-doctor-server-ruddy-kappa.vercel.app/bookings/${id}`, {
             method: "PATCH",
             headers: {
                 "Content-type": "application/json",

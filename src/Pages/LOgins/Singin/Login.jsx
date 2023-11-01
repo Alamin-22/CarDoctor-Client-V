@@ -1,12 +1,16 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import login from "../../../assets/images/login/login.svg"
-import { useContext } from "react";
-import { AuthContext } from "../../../Provider/AuthProvider";
+
 import Swal from "sweetalert2";
 import axios from "axios";
+import useAuth from "../../../Hooks/useAuth";
 const Login = () => {
 
-    const { Singin } = useContext(AuthContext);
+    // const { Singin } = useContext(AuthContext);
+
+    const { Singin }= useAuth();
+
+
     const location = useLocation();
     // console.log(location);
     const navigate = useNavigate();
@@ -29,7 +33,7 @@ const Login = () => {
                 const user = { email };
                 // get access token
 
-                axios.post("http://localhost:5000/jwt", user, { withCredentials: true })
+                axios.post("https://car-doctor-server-ruddy-kappa.vercel.app/jwt", user, { withCredentials: true })
                     .then(res => {
                         console.log(res.data)
                         if (res.data.success) {

@@ -38,7 +38,7 @@ const AuthProvider = ({ children }) => {
             // if user exist then Issue a token
 
             if (currentUser) {
-                axios.post("http://localhost:5000/jwt", loggedUser, { withCredentials: true })
+                axios.post("https://car-doctor-server-ruddy-kappa.vercel.app/jwt", loggedUser, { withCredentials: true })
                     .then(res => {
                         console.log("token Response on AuthProvider", res.data);
                     })
@@ -46,7 +46,7 @@ const AuthProvider = ({ children }) => {
             else {
                
                 // Cookies.remove('Token',)
-                // fetch("http://localhost:5000/singout")
+                // fetch("https://car-doctor-server-ruddy-kappa.vercel.app/singout")
                 //     .then(res => {
                 //         return res.json();
                 //     })
